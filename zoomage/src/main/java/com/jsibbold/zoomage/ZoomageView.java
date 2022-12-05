@@ -27,6 +27,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -90,10 +91,13 @@ public class ZoomageView extends AppCompatImageView implements OnScaleGestureLis
     private boolean doubleTapDetected = false;
     private boolean singleTapDetected = false;
 
+    private TapListener tapListener;
+
     public ZoomageView(Context context) {
         super(context);
         init(context, null);
     }
+
 
     public ZoomageView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -166,6 +170,10 @@ public class ZoomageView extends AppCompatImageView implements OnScaleGestureLis
         startValues = null;
 
         verifyScaleRange();
+    }
+
+    public void setTapListener(TapListener tapListener){
+        this.tapListener  = tapListener;
     }
 
     /**
@@ -512,6 +520,10 @@ public class ZoomageView extends AppCompatImageView implements OnScaleGestureLis
                     scaleBy = 1f;
                     resetImage();
                 }
+            }
+
+            if(singleTapDetected && tapListener != null ){
+                tapListener.onSingleTap();
             }
 
             getParent().requestDisallowInterceptTouchEvent(disallowParentTouch(event));

@@ -18,6 +18,7 @@ package com.jsibbold.zoomage.example;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.CompoundButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.jsibbold.zoomage.TapListener;
 import com.jsibbold.zoomage.ZoomageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
@@ -40,6 +42,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         demoView = findViewById(R.id.demoView);
         prepareOptions();
+        demoView.setTapListener(new TapListener() {
+            @Override
+            public void onSingleTap() {
+                Log.d("Tap","Detected");
+            }
+        });
     }
 
     private void prepareOptions() {
